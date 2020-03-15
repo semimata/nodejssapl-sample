@@ -35,7 +35,7 @@ router.post("/postData", (req,res) =>{
 router.get("/getData/:id", (req,res) =>{
     let adddata = sampleData.find(e => e.id === parseInt(req.params.id));
     if(!adddata){
-        res.send("該当のコースがありません");
+        res.send("該当のデータはありません");
     }
     res.send(adddata);
 })
@@ -43,7 +43,7 @@ router.get("/getData/:id", (req,res) =>{
 router.put("/putData/:id", (req,res) => {
     let putdata = sampleData.find(e => e.id === parseInt(req.params.id));
     if(!putdata){
-        res.send("該当のコースがありません");
+        res.send("該当のデータはありません");
     }
 
     let {error} = validate(req.body)
@@ -63,7 +63,7 @@ router.put("/putData/:id", (req,res) => {
 router.delete("/deleteData/:id", (req,res) =>{
     let deldata = sampleData.find(e => e.id === parseInt(req.params.id));
     if(!deldata){
-        res.send("該当のコースがありません");
+        res.send("該当のデータはありません");
     }
 
     let index = sampleData.indexOf(deldata);
