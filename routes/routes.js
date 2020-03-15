@@ -1,23 +1,22 @@
 const express = require("express");
 const Joi = require("joi");
 
-const cources = [
-    {id:1, name: "cource1"},
-    {id:2, name: "cource2"},
-    {id:3, name: "cource3"}
+const sampleData = [
+    {id:1, name: "sample data1"},
+    {id:2, name: "sample data2"},
+    {id:3, name: "sample data3"}
 ];
 
 const router = express.Router();
 
-router.get("/cources",(req,res) =>{
-    res.send(cources);
+router.get("/getData",(req,res) =>{
+    res.send(sampleData);
 });
 
-router.post("/cources", (req,res) =>{
+router.post("/postData", (req,res) =>{
     
     const shcema = {
         name: Joi.string().min(3).required()
-
     };
 
     let result = Joi.validate(req.body, shcema);
@@ -25,31 +24,25 @@ router.post("/cources", (req,res) =>{
         res.send(result.error.details[0].message);
     }
 
-    let cource ={
-        id: cources.length + 1,
+    let postdata ={
+        id: sampleData.length + 1,
         name: req.body.name
     };
-    cources.push(cource);
-    res.send(cources);
+    sampleData.push(postdata);
+    res.send(postdata);
 });
 
-
-router.get("/cources/:id", (req,res) =>{
-    let cource = cources.find(e => e.id === parseInt(req.params.id));
-    if(!cource){
+router.get("/getData/:id", (req,res) =>{
+    let adddata = sampleData.find(e => e.id === parseInt(req.params.id));
+    if(!adddata){
         res.send("該当のコースがありません");
     }
-    res.send(cource);
-
+    res.send(adddata);
 })
 
-router.get("/posts/:year/:month", (req,res) => {
-    res.send(req.query);
-});
-
-router.put("/cources/:id", (req,res) => {
-    let cource = cources.find(e => e.id === parseInt(req.params.id));
-    if(!cource){
+router.put("/putData/:id", (req,res) => {
+    let putdata = sampleData.find(e => e.id === parseInt(req.params.id));
+    if(!putdata){
         res.send("該当のコースがありません");
     }
 
@@ -59,24 +52,24 @@ router.put("/cources/:id", (req,res) => {
         res.send(error.details[0].message);
     }
 
-    cources.forEach(e => {
+    sampleData.forEach(e => {
         if(e.id === parseInt(req.params.id))
         e.name = req.body.name;
     })
-    res.send(cources);
+    res.send(sampleData);
 
 })
 
-router.delete("/cources/:id", (req,res) =>{
-    let cource = cources.find(e => e.id === parseInt(req.params.id));
-    if(!cource){
+router.delete("/deleteData/:id", (req,res) =>{
+    let deldata = sampleData.find(e => e.id === parseInt(req.params.id));
+    if(!deldata){
         res.send("該当のコースがありません");
     }
 
-    let index = cources.indexOf(cource);
-    cources.splice(index,1);
+    let index = sampleData.indexOf(deldata);
+    sampleData.splice(index,1);
 
-    res.send(cources);
+    res.send(sampleData);
 
 });
 
